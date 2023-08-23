@@ -1,12 +1,6 @@
 version: "latest"
+
 services:
-  web-app:
-    build: .
-    container_name: web-app
-    networks:
-      - web-app-network
-    depends_on:
-      - web-app-database
   web-app-database:
     image: postgres
     container_name: web-app-database
@@ -14,6 +8,14 @@ services:
       - web-app-network
     environment:
       - POSTGRES_PASSWORD=root
+  web-app:
+    build: .
+    container_name: web-app
+    networks:
+      - web-app-network
+    depends_on:
+      - web-app-database  
+    
 networks:
   web-app-network:
     name: web-app-network
