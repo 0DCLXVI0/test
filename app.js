@@ -1,7 +1,7 @@
 const config = require("config");
 const express = require("express");
 const app = express();
-const sequelize = require("./db/sequelize");
+const sequelizeAuthenticate = require("./utils/sequelizeAuthenticate")
 const bodyParser = require("body-parser");
 const userRouter = require("./routes/userRouter");
 const postRouter = require("./routes/postRouter");
@@ -14,13 +14,4 @@ app.use("/user", userRouter);
 app.use("/post", postRouter);
 app.use("/api-doc", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
-sequelize
-	.authenticate()
-	.then(() => {
-		sequelize.sync({ alter: true }).then(() =>
-			app.listen(config.get("server.port"), () => {
-				console.log("Сервер запущен");
-			})
-		);
-	})
-	.catch((e) => console.log(e));
+setTimeout(sequelizeAuthenticate(), 5000)

@@ -1,5 +1,5 @@
 FROM node
-WORKDIR /usr/src/app
+WORKDIR /usr/app
 COPY ./ ./
 RUN npm install
 EXPOSE 8080

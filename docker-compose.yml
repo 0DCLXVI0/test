@@ -1,4 +1,4 @@
-version: "latest"
+version: "3.9"
 
 services:
   web-app-database:
@@ -8,14 +8,23 @@ services:
       - web-app-network
     environment:
       - POSTGRES_PASSWORD=root
+    ports:
+      - 5432:5432
   web-app:
     build: .
     container_name: web-app
     networks:
       - web-app-network
     depends_on:
-      - web-app-database  
+      - web-app-database 
+    volumes:
+      - "static:/usr/app/static"
+    ports:
+      - 8080:8080
     
+volumes:
+  static:
+
 networks:
   web-app-network:
     name: web-app-network
